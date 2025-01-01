@@ -3,24 +3,41 @@ import { QuizQuestion } from "@/components/QuizQuestion";
 import { UserForm } from "@/components/UserForm";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 
 const questions = [
   {
     question: "Como você está se sentindo hoje?",
     options: ["Ansioso(a)", "Em paz", "Preocupado(a)", "Feliz"],
+    tags: {
+      "Ansioso(a)": ["ansioso", "ansiedade"],
+      "Em paz": ["paz", "tranquilidade"],
+      "Preocupado(a)": ["preocupado", "ansiedade"],
+      "Feliz": ["alegria", "felicidade"]
+    }
   },
   {
     question: "Qual área da sua vida precisa de mais atenção neste momento?",
     options: ["Relacionamentos", "Trabalho", "Saúde", "Espiritualidade"],
+    tags: {
+      "Relacionamentos": ["relacionamentos", "amor"],
+      "Trabalho": ["trabalho", "proposito"],
+      "Saúde": ["saude", "cura"],
+      "Espiritualidade": ["fe", "espiritualidade"]
+    }
   },
   // ... Adicione as outras 13 perguntas aqui
 ];
 
-const verses = [
-  "Não se preocupem com nada, mas em todas as orações peçam a Deus o que vocês precisam e orem sempre com o coração agradecido. - Filipenses 4:6",
-  "Venham a mim, todos vocês que estão cansados de carregar as suas pesadas cargas, e eu lhes darei descanso. - Mateus 11:28",
-  // ... Adicione mais versículos
-];
+const fetchVerses = async () => {
+  const { data, error } = await supabase
+    .from('verses')
+    .select('*');
+  
+  if (error) throw error;
+  return data;
+};
 
 const Index = () => {
   const [started, setStarted] = useState(false);
@@ -29,8 +46,40 @@ const Index = () => {
   const [showUserForm, setShowUserForm] = useState(false);
   const [verse, setVerse] = useState("");
 
+  const { data: verses } = useQuery({
+    queryKey: ['verses'],
+    queryFn: fetchVerses
+  });
+
   const handleStart = () => {
     setStarted(true);
+  };
+
+  const findBestMatchingVerse = (userAnswers: string[]) => {
+    if (!verses || verses.length === 0) return "";
+
+    // Collect all tags from user answers
+    const userTags = userAnswers.reduce((acc: string[], answer, index) => {
+      const questionTags = questions[index]?.tags[answer] || [];
+      return [...acc, ...questionTags];
+    }, []);
+
+    // Find verse with most matching tags
+    let bestMatch = verses[0];
+    let maxMatches = 0;
+
+    verses.forEach(verse => {
+      const matchCount = verse.tags?.filter(tag => 
+        userTags.includes(tag)
+      ).length || 0;
+
+      if (matchCount > maxMatches) {
+        maxMatches = matchCount;
+        bestMatch = verse;
+      }
+    });
+
+    return bestMatch.text;
   };
 
   const handleAnswer = (answer: string) => {
@@ -40,9 +89,8 @@ const Index = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      // Seleciona um versículo baseado nas respostas
-      const randomVerse = verses[Math.floor(Math.random() * verses.length)];
-      setVerse(randomVerse);
+      const matchedVerse = findBestMatchingVerse(newAnswers);
+      setVerse(matchedVerse);
       setShowUserForm(true);
     }
   };

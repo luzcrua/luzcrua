@@ -19,6 +19,7 @@ export default {
     },
     extend: {
       colors: {
+        border: "hsl(var(--border))",
         celestial: {
           50: "#f5f3ff",
           100: "#ede9fe",

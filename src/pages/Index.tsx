@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { QuizQuestion } from "@/components/QuizQuestion";
-import { UserForm } from "@/components/UserForm";
+import { QuizResult } from "@/components/QuizResult";
+import { WelcomeForm } from "@/components/WelcomeForm";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 
@@ -172,15 +172,17 @@ const Index = () => {
   const [started, setStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
-  const [showUserForm, setShowUserForm] = useState(false);
+  const [userName, setUserName] = useState("");
   const [verse, setVerse] = useState("");
+  const [showResult, setShowResult] = useState(false);
 
   const { data: verses } = useQuery({
     queryKey: ['verses'],
     queryFn: fetchVerses
   });
 
-  const handleStart = () => {
+  const handleStart = (name: string) => {
+    setUserName(name);
     setStarted(true);
   };
 
@@ -217,7 +219,8 @@ const Index = () => {
   };
 
   const handleAnswer = (answer: string) => {
-    const newAnswers = [...answers, answer];
+    const newAnswers = [...answers];
+    newAnswers[currentQuestion] = answer;
     setAnswers(newAnswers);
 
     if (currentQuestion < questions.length - 1) {
@@ -228,53 +231,21 @@ const Index = () => {
   const handleSeeResults = () => {
     const matchedVerse = findBestMatchingVerse(answers);
     setVerse(matchedVerse);
-    setShowUserForm(true);
-  };
-
-  const handleWhatsApp = () => {
-    const message = encodeURIComponent(`Seu versículo especial: ${verse}`);
-    window.open(`https://wa.me/?text=${message}`, '_blank');
-  };
-
-  const handleUserSubmit = (name: string, email: string) => {
-    console.log("Dados do usuário:", { name, email, answers, verse });
+    setShowResult(true);
   };
 
   if (!started) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-celestial-300 to-celestial-500 p-4">
-        <Card className="w-full max-w-2xl p-8 text-center animate-fade-up bg-white/90 backdrop-blur">
-          <h1 className="text-4xl font-bold text-gray-800 mb-6">Espelho da Alma</h1>
-          <p className="text-lg text-gray-600 mb-8">
-            Descubra um versículo especial que fala diretamente ao seu coração através de um breve questionário.
-          </p>
-          <Button
-            onClick={handleStart}
-            className="bg-golden-400 hover:bg-golden-500 text-white px-8 py-4 text-lg"
-          >
-            Começar Jornada
-          </Button>
-        </Card>
+        <WelcomeForm onStart={handleStart} />
       </div>
     );
   }
 
-  if (showUserForm) {
+  if (showResult) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-celestial-300 to-celestial-500 p-4">
-        <div className="w-full max-w-2xl space-y-8 text-center">
-          <Card className="p-8 animate-fade-up bg-white/90 backdrop-blur">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6">Seu versículo especial:</h2>
-            <p className="text-lg text-gray-600 italic mb-8">{verse}</p>
-            <Button
-              onClick={handleWhatsApp}
-              className="bg-green-500 hover:bg-green-600 text-white font-bold"
-            >
-              Receber no WhatsApp
-            </Button>
-          </Card>
-          <UserForm onSubmit={handleUserSubmit} />
-        </div>
+        <QuizResult verse={verse} userName={userName} />
       </div>
     );
   }
@@ -298,7 +269,7 @@ const Index = () => {
               Anterior
             </Button>
           )}
-          {currentQuestion === questions.length - 1 && answers.length === questions.length - 1 && (
+          {currentQuestion === questions.length - 1 && (
             <Button
               onClick={handleSeeResults}
               className="bg-golden-400 hover:bg-golden-500 text-white ml-auto"

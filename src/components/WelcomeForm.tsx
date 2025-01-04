@@ -21,24 +21,41 @@ export const WelcomeForm = ({ onStart }: WelcomeFormProps) => {
   };
 
   return (
-    <Card className="w-full max-w-md p-6 animate-fade-up bg-white/90 backdrop-blur">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Bem-vindo(a) ao Espelho da Alma</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <Input
-            placeholder="Digite seu primeiro nome"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full"
-          />
+    <Card className="w-full max-w-md p-8 animate-fade-up bg-white/90 backdrop-blur">
+      <div className="space-y-6">
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl font-semibold text-gray-800">Espelho da Alma</h2>
+          <p className="text-gray-600 leading-relaxed">
+            Bem-vindo(a) a uma jornada de autoconhecimento e reflexão espiritual. 
+            Através de perguntas cuidadosamente selecionadas, vamos descobrir um 
+            versículo bíblico especialmente escolhido para você neste momento.
+          </p>
         </div>
-        <Button 
-          type="submit" 
-          className="w-full bg-celestial-500 hover:bg-celestial-600 text-white font-semibold"
-        >
-          Começar Jornada
-        </Button>
-      </form>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <label htmlFor="name" className="text-sm font-medium text-gray-700">
+              Como podemos te chamar?
+            </label>
+            <Input
+              id="name"
+              placeholder="Digite seu primeiro nome"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full"
+            />
+          </div>
+          <Button 
+            type="submit" 
+            className={`w-full bg-celestial-500 hover:bg-celestial-600 text-white font-semibold transition-all duration-300 ${
+              name.trim() ? 'animate-pulse' : 'opacity-50 cursor-not-allowed'
+            }`}
+            disabled={!name.trim()}
+          >
+            Começar Jornada
+          </Button>
+        </form>
+      </div>
     </Card>
   );
 };

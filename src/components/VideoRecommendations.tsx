@@ -11,11 +11,12 @@ const fetchRandomVideos = async () => {
   const { data, error } = await supabase
     .from('videos')
     .select('*')
-    .order('random()')
     .limit(3);
   
   if (error) throw error;
-  return data;
+  
+  // Shuffle the results in JavaScript since Postgres random() ordering is causing issues
+  return data?.sort(() => Math.random() - 0.5);
 };
 
 export const VideoRecommendations = () => {

@@ -1,13 +1,38 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 interface QuizResultProps {
   verse: string;
   userName: string;
 }
 
+interface Video {
+  id: number;
+  url: string;
+  title: string;
+}
+
+const fetchRandomVideos = async () => {
+  const { data, error } = await supabase
+    .from('videos')
+    .select('*')
+    .order('random()')
+    .limit(3);
+  
+  if (error) throw error;
+  return data;
+};
+
 export const QuizResult = ({ verse, userName }: QuizResultProps) => {
+  const { data: videos, isLoading } = useQuery({
+    queryKey: ['recommendedVideos'],
+    queryFn: fetchRandomVideos
+  });
+
   const handleWhatsAppShare = () => {
     const message = encodeURIComponent(`${verse}\n\nDescubra seu versículo especial em:\nhttps://www.youtube.com/@luzcruaoficial/`);
     window.open(`https://wa.me/?text=${message}`, '_blank');
@@ -99,6 +124,29 @@ export const QuizResult = ({ verse, userName }: QuizResultProps) => {
               ))}
             </ol>
           </ScrollArea>
+        </div>
+
+        <div className="mt-8">
+          <h3 className="text-xl font-semibold text-gray-800 mb-4">
+            Vídeos recomendados do Canal Luz Crua Oficial:
+          </h3>
+          {isLoading ? (
+            <p className="text-gray-600">Carregando recomendações...</p>
+          ) : (
+            <div className="space-y-4">
+              {videos?.map((video) => (
+                <a
+                  key={video.id}
+                  href={video.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
+                >
+                  <p className="text-gray-800 font-medium">{video.title}</p>
+                </a>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </Card>

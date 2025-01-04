@@ -189,7 +189,6 @@ const Index = () => {
   const handlePrevious = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1);
-      setAnswers(answers.slice(0, -1));
     }
   };
 
@@ -223,8 +222,11 @@ const Index = () => {
     newAnswers[currentQuestion] = answer;
     setAnswers(newAnswers);
 
+    // Only advance to next question after a short delay
     if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
+      setTimeout(() => {
+        setCurrentQuestion(currentQuestion + 1);
+      }, 500);
     }
   };
 
@@ -258,6 +260,7 @@ const Index = () => {
           options={questions[currentQuestion].options}
           onAnswer={handleAnswer}
           currentQuestion={currentQuestion}
+          selectedAnswer={answers[currentQuestion]}
         />
         <div className="flex justify-between mt-4">
           {currentQuestion > 0 && (
@@ -269,7 +272,7 @@ const Index = () => {
               Anterior
             </Button>
           )}
-          {currentQuestion === questions.length - 1 && (
+          {answers[currentQuestion] && currentQuestion === questions.length - 1 && (
             <Button
               onClick={handleSeeResults}
               className="bg-golden-400 hover:bg-golden-500 text-white ml-auto"

@@ -6,9 +6,16 @@ interface QuizQuestionProps {
   options: string[];
   onAnswer: (answer: string) => void;
   currentQuestion: number;
+  selectedAnswer?: string;
 }
 
-export const QuizQuestion = ({ question, options, onAnswer, currentQuestion }: QuizQuestionProps) => {
+export const QuizQuestion = ({ 
+  question, 
+  options, 
+  onAnswer, 
+  currentQuestion,
+  selectedAnswer 
+}: QuizQuestionProps) => {
   return (
     <Card className="w-full max-w-2xl p-6 animate-fade-up bg-white/90 backdrop-blur">
       <div className="mb-8">
@@ -19,8 +26,12 @@ export const QuizQuestion = ({ question, options, onAnswer, currentQuestion }: Q
         {options.map((option, index) => (
           <Button
             key={index}
-            variant="outline"
-            className="w-full p-4 text-left hover:bg-celestial-100 transition-colors"
+            variant={selectedAnswer === option ? "default" : "outline"}
+            className={`w-full p-4 text-left transition-colors ${
+              selectedAnswer === option 
+                ? 'bg-celestial-500 text-white hover:bg-celestial-600' 
+                : 'hover:bg-celestial-100'
+            }`}
             onClick={() => onAnswer(option)}
           >
             {option}

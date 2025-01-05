@@ -37,7 +37,9 @@ export const VerseContactForm = ({ verse }: VerseContactFormProps) => {
     try {
       const { error } = await supabase
         .from('verse_contacts')
-        .insert([{ phone, email, verse }]);
+        .insert([
+          { phone, email, verse }
+        ]);
 
       if (error) throw error;
 
@@ -46,8 +48,12 @@ export const VerseContactForm = ({ verse }: VerseContactFormProps) => {
         description: "Suas informações foram salvas com sucesso.",
       });
 
+      // Pass the verse data through navigation state
       navigate('/verse-applications', { 
-        state: { verse, phone, email } 
+        state: { 
+          verse,
+          userContact: { phone, email }
+        } 
       });
     } catch (error) {
       console.error('Error saving contact:', error);

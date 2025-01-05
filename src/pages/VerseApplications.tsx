@@ -1,14 +1,14 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { VerseApplications } from "@/components/VerseApplications";
 import { VideoRecommendations } from "@/components/VideoRecommendations";
 
 const VerseApplicationsPage = () => {
   const location = useLocation();
-  const { verse } = location.state || {};
+  const { verse, userContact } = location.state || {};
 
   if (!verse) {
-    return <div>Versículo não encontrado</div>;
+    return <Navigate to="/" replace />;
   }
 
   return (

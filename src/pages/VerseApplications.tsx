@@ -12,8 +12,15 @@ const VerseApplicationsPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-celestial-300 to-celestial-500 p-4">
-      <Card className="w-full max-w-2xl p-6 animate-fade-up bg-white/90 backdrop-blur">
+    <div 
+      className="min-h-screen flex items-center justify-center p-4 bg-cover bg-center bg-no-repeat"
+      style={{ 
+        backgroundImage: "url('https://images.unsplash.com/photo-1473177104440-ffee2f376098')",
+        backgroundBlendMode: "overlay",
+        backgroundColor: "rgba(255, 255, 255, 0.9)"
+      }}
+    >
+      <Card className="w-full max-w-2xl p-6 animate-fade-up bg-white/95 backdrop-blur shadow-xl">
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold text-gray-800">
             Seu versículo especial:

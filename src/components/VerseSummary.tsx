@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { VerseContactForm } from "./VerseContactForm";
 
 interface VerseSummaryProps {
   verse: string;
@@ -29,6 +30,7 @@ export const VerseSummary = ({ verse, userName }: VerseSummaryProps) => {
       >
         Compartilhar este versículo no WhatsApp
       </Button>
+      <VerseContactForm verse={verse} />
     </div>
   );
 };

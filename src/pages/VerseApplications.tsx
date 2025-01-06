@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { VerseApplications } from "@/components/VerseApplications";
+import { VideoRecommendations } from "@/components/VideoRecommendations";
 
 const VerseApplicationsPage = () => {
   const location = useLocation();
@@ -28,6 +29,7 @@ const VerseApplicationsPage = () => {
         </h2>
         <p className="text-lg text-gray-700 italic mb-8">{verse}</p>
         <VerseApplications />
+        <VideoRecommendations />
       </div>
     </div>
   );

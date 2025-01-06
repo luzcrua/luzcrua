@@ -48,7 +48,6 @@ export const VerseContactForm = ({ verse }: VerseContactFormProps) => {
         description: "Suas informações foram salvas com sucesso.",
       });
 
-      // Pass the verse data through navigation state
       navigate('/verse-applications', { 
         state: { 
           verse,
@@ -94,24 +93,30 @@ export const VerseContactForm = ({ verse }: VerseContactFormProps) => {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-blue-500 hover:bg-blue-600"
+          className="w-full bg-celestial-500 hover:bg-celestial-600 text-white font-bold py-4 animate-pulse"
         >
           Ver as 50 maneiras de aplicar este versículo
         </Button>
       </form>
 
       <AlertDialog open={showConfirmation} onOpenChange={setShowConfirmation}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-black/90 border-2 border-celestial-400 shadow-[0_0_30px_rgba(139,92,246,0.5)]">
           <AlertDialogHeader>
-            <AlertDialogTitle>Confirmar envio</AlertDialogTitle>
-            <AlertDialogDescription>
-              Você está prestes a receber 50 maneiras práticas de aplicar este versículo na sua vida.
-              Deseja continuar?
+            <AlertDialogTitle className="text-celestial-400 text-2xl font-bold">
+              🌟 Descubra o Poder da Palavra! 🌟
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-white text-lg">
+              Você está prestes a receber 50 maneiras práticas e transformadoras
+              de aplicar este versículo na sua vida diária!
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogAction onClick={handleConfirm} disabled={isSubmitting}>
-              Sim, continuar
+            <AlertDialogAction
+              onClick={handleConfirm}
+              disabled={isSubmitting}
+              className="bg-celestial-500 hover:bg-celestial-600 text-white font-bold py-4 px-8 rounded-lg shadow-[0_0_20px_rgba(139,92,246,0.5)] transition-all hover:shadow-[0_0_30px_rgba(139,92,246,0.7)]"
+            >
+              ✨ Sim, quero transformar minha vida! ✨
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

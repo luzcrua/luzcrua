@@ -26,9 +26,9 @@ export const VerseSummary = ({ verse, userName }: VerseSummaryProps) => {
       </p>
       <Button
         onClick={handleWhatsAppShare}
-        className="w-full bg-green-500 hover:bg-green-600 text-white font-bold"
+        className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4"
       >
-        Compartilhar este versículo no WhatsApp
+        COMPARTILHAR ESTE VERSÍCULO NO WHATSAPP
       </Button>
       <VerseContactForm verse={verse} />
     </div>

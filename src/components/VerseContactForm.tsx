@@ -28,11 +28,20 @@ export const VerseContactForm = ({ verse }: VerseContactFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!phone.trim() || !email.trim()) {
+      toast({
+        title: "Campos obrigatórios",
+        description: "Por favor, preencha todos os campos.",
+        variant: "destructive",
+      });
+      return;
+    }
     setShowConfirmation(true);
   };
 
   const handleConfirm = async () => {
     setIsSubmitting(true);
+    console.log("Saving contact information...");
 
     try {
       const { error } = await supabase
@@ -41,8 +50,12 @@ export const VerseContactForm = ({ verse }: VerseContactFormProps) => {
           { phone, email, verse }
         ]);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error saving contact:', error);
+        throw error;
+      }
 
+      console.log("Contact saved successfully");
       toast({
         title: "Sucesso!",
         description: "Suas informações foram salvas com sucesso.",
@@ -70,24 +83,24 @@ export const VerseContactForm = ({ verse }: VerseContactFormProps) => {
   return (
     <>
       <form onSubmit={handleSubmit} className="space-y-4 mt-6">
-        <div>
+        <div className="space-y-2">
           <Input
             type="tel"
             placeholder="Seu telefone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             required
-            className="w-full"
+            className="w-full bg-white/80 backdrop-blur-sm border-celestial-200 focus:border-celestial-400 transition-colors"
           />
         </div>
-        <div>
+        <div className="space-y-2">
           <Input
             type="email"
             placeholder="Seu email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full"
+            className="w-full bg-white/80 backdrop-blur-sm border-celestial-200 focus:border-celestial-400 transition-colors"
           />
         </div>
         <Button

@@ -1,4 +1,3 @@
-import { VerseContactForm } from "./VerseContactForm";
 import { WhatsAppShareButton } from "./WhatsAppShareButton";
 
 interface VerseSummaryProps {
@@ -20,7 +19,6 @@ export const VerseSummary = ({ verse, userName }: VerseSummaryProps) => {
         Compartilhe esta mensagem de luz e inspiração!
       </p>
       <WhatsAppShareButton verse={verse} />
-      <VerseContactForm verse={verse} />
     </div>
   );
 };

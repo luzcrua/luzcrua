@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { WelcomeForm } from "@/components/WelcomeForm";
 import { QuizQuestions } from "@/components/QuizQuestions";
-import { VerseMatching } from "@/components/VerseMatching";
 import { QuizResult } from "@/components/QuizResult";
 import { questions } from "@/data/questions";
 
@@ -22,10 +21,6 @@ const Index = () => {
     setShowResult(true);
   };
 
-  const handleVerseFound = (matchedVerse: string) => {
-    setVerse(matchedVerse);
-  };
-
   if (!started) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-celestial-300 to-celestial-500 p-4">
@@ -34,15 +29,10 @@ const Index = () => {
     );
   }
 
-  if (showResult) {
+  if (showResult && verse) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-celestial-300 to-celestial-500 p-4">
-        <VerseMatching
-          userAnswers={answers}
-          questions={questions}
-          onVerseFound={handleVerseFound}
-        />
-        {verse && <QuizResult verse={verse} userName={userName} />}
+        <QuizResult verse={verse} userName={userName} />
       </div>
     );
   }

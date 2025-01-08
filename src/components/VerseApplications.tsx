@@ -1,47 +1,69 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-
-const fetchApplications = async () => {
-  console.log("Fetching verse applications from Supabase...");
-  const { data, error } = await supabase
-    .from('verse_applications')
-    .select('*')
-    .order('id', { ascending: true });
-  
-  if (error) {
-    console.error("Error fetching applications:", error);
-    throw error;
-  }
-  
-  console.log("Fetched applications:", data);
-  return data;
-};
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const VerseApplications = () => {
-  const { data: applications, isLoading } = useQuery({
+  const { data: applications, isLoading, error } = useQuery({
     queryKey: ['verse-applications'],
-    queryFn: fetchApplications
+    queryFn: async () => {
+      console.log('Fetching verse applications...');
+      const { data, error } = await supabase
+        .from('verse_applications')
+        .select('*')
+        .order('created_at', { ascending: true });
+      
+      if (error) {
+        console.error('Error fetching verse applications:', error);
+        throw error;
+      }
+      
+      console.log('Verse applications fetched:', data);
+      return data;
+    }
   });
 
+  if (error) {
+    console.error('Error in VerseApplications component:', error);
+    return (
+      <div className="text-center p-4 bg-red-50 rounded-lg">
+        <p className="text-red-600">Ocorreu um erro ao carregar as aplicações do versículo.</p>
+      </div>
+    );
+  }
+
   if (isLoading) {
-    return <div className="mt-8 text-center">Carregando aplicações...</div>;
+    return (
+      <div className="space-y-4">
+        <h3 className="text-2xl font-bold text-gray-800 mb-6">
+          50 Maneiras de Aplicar este Versículo
+        </h3>
+        {[...Array(5)].map((_, i) => (
+          <Skeleton key={i} className="h-16 w-full bg-gray-200 rounded" />
+        ))}
+      </div>
+    );
   }
 
   return (
-    <div className="mt-8">
-      <h3 className="text-xl font-semibold text-gray-800 mb-4">
-        50 maneiras de aplicar este versículo na sua vida:
+    <div className="animate-fade-up">
+      <h3 className="text-2xl font-bold text-gray-800 mb-6">
+        50 Maneiras de Aplicar este Versículo
       </h3>
-      <ScrollArea className="h-[400px] rounded-md border p-4">
-        <ol className="list-decimal list-inside space-y-2">
-          {applications?.map((app) => (
-            <li key={app.id} className="text-gray-700">
-              {app.application}
-            </li>
-          ))}
-        </ol>
-      </ScrollArea>
+      <div className="space-y-4">
+        {applications?.map((app, index) => (
+          <div
+            key={app.id}
+            className="p-4 bg-white rounded-lg shadow-sm border border-celestial-100 hover:border-celestial-300 transition-colors"
+          >
+            <div className="flex items-start gap-4">
+              <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-celestial-100 text-celestial-600 rounded-full font-semibold">
+                {index + 1}
+              </span>
+              <p className="text-gray-700 leading-relaxed">{app.application}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

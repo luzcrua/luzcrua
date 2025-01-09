@@ -7,6 +7,8 @@ import HomePage from "./pages/HomePage";
 import BlogPost from "./pages/BlogPost";
 import CategoryPage from "./pages/CategoryPage";
 import About from "./pages/About";
+import { LanguageSelector } from "./components/LanguageSelector";
+import "./i18n/config";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +18,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <LanguageSelector />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/post/:slug" element={<BlogPost />} />

@@ -26,23 +26,38 @@ const BlogPost = () => {
     },
   });
 
+  // Nova query para buscar posts relacionados
+  const { data: relatedPosts = [] } = useQuery({
+    queryKey: ['relatedPosts', post?.category_id],
+    enabled: !!post?.category_id,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('posts')
+        .select('*')
+        .eq('category_id', post.category_id)
+        .neq('id', post.id) // Exclui o post atual
+        .limit(3) // Limita a 3 posts relacionados
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
   useEffect(() => {
     const translatePost = async () => {
       if (!post) return;
 
       if (i18n.language === 'pt') {
-        // Se o idioma for português, usa o conteúdo original
         setTranslatedContent(post.content);
         setTranslatedTitle(post.title);
         return;
       }
 
       try {
-        // Traduz o título
         const translatedTitleText = await translateText(post.title, i18n.language);
         setTranslatedTitle(translatedTitleText);
 
-        // Traduz o conteúdo
         const translatedContentText = await translateText(post.content, i18n.language);
         setTranslatedContent(translatedContentText);
 

@@ -21,6 +21,37 @@ const BlogPost = () => {
         .select(`*, categories(*)`)
         .eq('slug', slug)
         .single();
+      
+      // Inserir o novo post se ele ainda não existir
+      if (!data && slug === "impacto-ia-sociedade") {
+        const newPost = {
+          title: "O Impacto da IA na Sociedade Moderna",
+          content: `A Inteligência Artificial (IA) está transformando rapidamente nossa sociedade de maneiras profundas e irreversíveis. Esta tecnologia revolucionária está presente em praticamente todos os aspectos de nossas vidas, desde assistentes virtuais em nossos smartphones até sistemas complexos de diagnóstico médico.
+
+Na área da saúde, a IA está permitindo diagnósticos mais precisos e tratamentos personalizados. Algoritmos avançados podem analisar imagens médicas com uma precisão que rivaliza com especialistas humanos, e em alguns casos, até os supera.
+
+No campo da educação, sistemas de aprendizado adaptativo estão personalizando a experiência educacional para cada estudante, identificando áreas de dificuldade e ajustando o conteúdo em tempo real.
+
+No mercado de trabalho, a automação impulsionada pela IA está criando novos tipos de empregos enquanto transforma ou elimina outros. Isso levanta questões importantes sobre o futuro do trabalho e a necessidade de requalificação profissional.
+
+Entretanto, junto com estes avanços, surgem desafios éticos significativos. Questões sobre privacidade, viés algorítmico e o impacto na desigualdade social precisam ser cuidadosamente consideradas e abordadas.
+
+À medida que avançamos, é crucial encontrar um equilíbrio entre inovação tecnológica e valores humanos fundamentais. A IA deve ser desenvolvida e implementada de maneira que beneficie toda a sociedade, não apenas alguns segmentos dela.`,
+          slug: "impacto-ia-sociedade",
+          category_id: "1", // Assumindo que é a mesma categoria do post existente
+          excerpt: "Uma análise profunda sobre como a Inteligência Artificial está moldando nossa sociedade moderna e os desafios que precisamos enfrentar.",
+          image_url: "https://images.unsplash.com/photo-1677442136019-21780ecad995"
+        };
+
+        const { error: insertError } = await supabase
+          .from('posts')
+          .insert([newPost]);
+
+        if (insertError) throw insertError;
+        
+        return { ...newPost, categories: { name: "Tecnologia" } };
+      }
+
       if (error) throw error;
       return data;
     },
@@ -35,8 +66,8 @@ const BlogPost = () => {
         .from('posts')
         .select('*')
         .eq('category_id', post.category_id)
-        .neq('id', post.id) // Exclui o post atual
-        .limit(3) // Limita a 3 posts relacionados
+        .neq('id', post.id)
+        .limit(3)
         .order('created_at', { ascending: false });
       
       if (error) throw error;

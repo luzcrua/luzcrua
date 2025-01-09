@@ -24,7 +24,11 @@ const BlogPost = () => {
       
       // Inserir o novo post se ele ainda não existir
       if (!data && slug === "impacto-ia-sociedade") {
+        const now = new Date().toISOString();
+        const newPostId = crypto.randomUUID();
+        
         const newPost = {
+          id: newPostId,
           title: "O Impacto da IA na Sociedade Moderna",
           content: `A Inteligência Artificial (IA) está transformando rapidamente nossa sociedade de maneiras profundas e irreversíveis. Esta tecnologia revolucionária está presente em praticamente todos os aspectos de nossas vidas, desde assistentes virtuais em nossos smartphones até sistemas complexos de diagnóstico médico.
 
@@ -38,9 +42,10 @@ Entretanto, junto com estes avanços, surgem desafios éticos significativos. Qu
 
 À medida que avançamos, é crucial encontrar um equilíbrio entre inovação tecnológica e valores humanos fundamentais. A IA deve ser desenvolvida e implementada de maneira que beneficie toda a sociedade, não apenas alguns segmentos dela.`,
           slug: "impacto-ia-sociedade",
-          category_id: "1", // Assumindo que é a mesma categoria do post existente
+          category_id: "1",
           excerpt: "Uma análise profunda sobre como a Inteligência Artificial está moldando nossa sociedade moderna e os desafios que precisamos enfrentar.",
-          image_url: "https://images.unsplash.com/photo-1677442136019-21780ecad995"
+          image_url: "https://images.unsplash.com/photo-1677442136019-21780ecad995",
+          created_at: now
         };
 
         const { error: insertError } = await supabase
@@ -49,7 +54,16 @@ Entretanto, junto com estes avanços, surgem desafios éticos significativos. Qu
 
         if (insertError) throw insertError;
         
-        return { ...newPost, categories: { name: "Tecnologia" } };
+        return { 
+          ...newPost, 
+          categories: { 
+            id: "1",
+            name: "Tecnologia",
+            created_at: now,
+            description: null,
+            slug: "tecnologia"
+          } 
+        };
       }
 
       if (error) throw error;

@@ -20,6 +20,14 @@ const resources = {
       result: {
         specialVerse: "aqui está seu versículo especial:",
         share: "Compartilhe esta mensagem de luz e inspiração!"
+      },
+      form: {
+        emailPlaceholder: "Seu email",
+        namePlaceholder: "Seu nome",
+        submitButton: "Descobrir meu versículo",
+        errorMessage: "Por favor, preencha todos os campos",
+        emailError: "Por favor, insira um email válido",
+        receiveVerse: "Receba seu versículo"
       }
     }
   },
@@ -41,6 +49,14 @@ const resources = {
       result: {
         specialVerse: "here is your special verse:",
         share: "Share this message of light and inspiration!"
+      },
+      form: {
+        emailPlaceholder: "Your email",
+        namePlaceholder: "Your name",
+        submitButton: "Discover my verse",
+        errorMessage: "Please fill in all fields",
+        emailError: "Please enter a valid email",
+        receiveVerse: "Receive your verse"
       }
     }
   },
@@ -62,6 +78,14 @@ const resources = {
       result: {
         specialVerse: "aquí está tu versículo especial:",
         share: "¡Comparte este mensaje de luz e inspiración!"
+      },
+      form: {
+        emailPlaceholder: "Tu email",
+        namePlaceholder: "Tu nombre",
+        submitButton: "Descubrir mi versículo",
+        errorMessage: "Por favor, completa todos los campos",
+        emailError: "Por favor, ingresa un email válido",
+        receiveVerse: "Recibe tu versículo"
       }
     }
   },
@@ -83,6 +107,14 @@ const resources = {
       result: {
         specialVerse: "ecco il tuo versetto speciale:",
         share: "Condividi questo messaggio di luce e ispirazione!"
+      },
+      form: {
+        emailPlaceholder: "La tua email",
+        namePlaceholder: "Il tuo nome",
+        submitButton: "Scopri il mio versetto",
+        errorMessage: "Per favore, compila tutti i campi",
+        emailError: "Per favore, inserisci una email valida",
+        receiveVerse: "Ricevi il tuo versetto"
       }
     }
   },
@@ -104,6 +136,14 @@ const resources = {
       result: {
         specialVerse: "voici votre verset spécial :",
         share: "Partagez ce message de lumière et d'inspiration !"
+      },
+      form: {
+        emailPlaceholder: "Votre email",
+        namePlaceholder: "Votre nom",
+        submitButton: "Découvrir mon verset",
+        errorMessage: "Veuillez remplir tous les champs",
+        emailError: "Veuillez entrer un email valide",
+        receiveVerse: "Recevez votre verset"
       }
     }
   }

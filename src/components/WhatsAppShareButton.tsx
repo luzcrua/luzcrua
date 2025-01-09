@@ -1,10 +1,13 @@
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 interface WhatsAppShareButtonProps {
   verse: string;
 }
 
 export const WhatsAppShareButton = ({ verse }: WhatsAppShareButtonProps) => {
+  const { t } = useTranslation();
+
   const handleWhatsAppShare = () => {
     const message = encodeURIComponent(
       `${verse}\n\nDescubra seu versículo especial em:\nhttps://www.youtube.com/@luzcruaoficial/`

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { QuizQuestion } from "@/components/QuizQuestion";
 import { Button } from "@/components/ui/button";
 import { questions } from "@/data/questions";
+import { useTranslation } from "react-i18next";
 
 interface QuizQuestionsProps {
   onComplete: (answers: string[]) => void;
@@ -10,6 +11,7 @@ interface QuizQuestionsProps {
 export const QuizQuestions = ({ onComplete }: QuizQuestionsProps) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
+  const { t } = useTranslation();
 
   const handlePrevious = () => {
     if (currentQuestion > 0) {
@@ -49,7 +51,7 @@ export const QuizQuestions = ({ onComplete }: QuizQuestionsProps) => {
             variant="outline"
             className="bg-white/90"
           >
-            Anterior
+            {t('quiz.previous')}
           </Button>
         )}
         {answers[currentQuestion] && currentQuestion === questions.length - 1 && (
@@ -57,7 +59,7 @@ export const QuizQuestions = ({ onComplete }: QuizQuestionsProps) => {
             onClick={handleSeeResults}
             className="bg-golden-400 hover:bg-golden-500 text-white ml-auto"
           >
-            Ver Resultados
+            {t('quiz.seeResults')}
           </Button>
         )}
       </div>

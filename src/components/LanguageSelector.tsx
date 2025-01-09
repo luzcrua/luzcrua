@@ -7,6 +7,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { translateText } from '@/services/translation';
+import { toast } from 'sonner';
 
 const languages = [
   { code: 'pt', name: 'Português' },
@@ -18,6 +20,24 @@ const languages = [
 
 export const LanguageSelector = () => {
   const { i18n } = useTranslation();
+
+  const handleLanguageChange = async (langCode: string) => {
+    try {
+      // Muda o idioma imediatamente para melhor UX
+      await i18n.changeLanguage(langCode);
+      
+      // Mostra um toast informando que a tradução está em andamento
+      toast.info('Traduzindo conteúdo...');
+
+      // Aqui você pode adicionar lógica para traduzir dinamicamente
+      // o conteúdo que não está no i18n, se necessário
+      
+      toast.success('Idioma alterado com sucesso!');
+    } catch (error) {
+      console.error('Error changing language:', error);
+      toast.error('Erro ao mudar o idioma. Tente novamente.');
+    }
+  };
 
   return (
     <div className="fixed top-4 right-4 z-50">
@@ -31,7 +51,7 @@ export const LanguageSelector = () => {
           {languages.map((lang) => (
             <DropdownMenuItem
               key={lang.code}
-              onClick={() => i18n.changeLanguage(lang.code)}
+              onClick={() => handleLanguageChange(lang.code)}
               className={`cursor-pointer ${i18n.language === lang.code ? 'bg-celestial-100' : ''}`}
             >
               {lang.name}

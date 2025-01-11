@@ -3,8 +3,11 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
+  const { t } = useTranslation();
+  
   const { data: categories } = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
@@ -33,7 +36,7 @@ const HomePage = () => {
           <NavigationMenuList className="space-x-8">
             <NavigationMenuItem>
               <NavigationMenuLink className="text-lg font-medium hover:text-celestial-600 transition-colors" href="/">
-                Home
+                {t('navigation.home')}
               </NavigationMenuLink>
             </NavigationMenuItem>
             {categories?.map((category) => (
@@ -48,7 +51,7 @@ const HomePage = () => {
             ))}
             <NavigationMenuItem>
               <NavigationMenuLink className="text-lg font-medium hover:text-celestial-600 transition-colors" href="/about">
-                Sobre
+                {t('navigation.about')}
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -58,18 +61,18 @@ const HomePage = () => {
       <main className="max-w-screen-xl mx-auto px-8 py-12">
         <section className="text-center mb-20">
           <h1 className="text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-celestial-500 to-celestial-700">
-            Blog do Futuro
+            {t('welcome.title')}
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Explorando as fronteiras da tecnologia e design com um olhar minimalista e futurista.
+            {t('welcome.description')}
           </p>
           <Button className="bg-celestial-500 hover:bg-celestial-600 text-white px-8 py-6 text-lg rounded-full transition-all transform hover:scale-105">
-            Comece a Explorar
+            {t('welcome.startButton')}
           </Button>
         </section>
 
         <section className="mb-20">
-          <h2 className="text-3xl font-bold mb-8 text-center">Categorias</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{t('blog.categories')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {categories?.map((category) => (
               <Link
@@ -104,6 +107,9 @@ const HomePage = () => {
                 </div>
                 <h3 className="text-xl font-semibold mb-2 text-gray-800">{post.title}</h3>
                 <p className="text-gray-600">{post.excerpt}</p>
+                <Button variant="link" className="mt-4">
+                  {t('blog.readMore')}
+                </Button>
               </div>
             </Link>
           ))}
@@ -112,7 +118,7 @@ const HomePage = () => {
 
       <footer className="bg-white/10 backdrop-blur-sm py-8">
         <div className="max-w-screen-xl mx-auto px-8 text-center text-gray-600">
-          <p>© 2024 Blog do Futuro. Todos os direitos reservados.</p>
+          <p>© 2024 Blog do Futuro. {t('footer.allRightsReserved')}</p>
         </div>
       </footer>
     </div>

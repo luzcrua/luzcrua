@@ -2,9 +2,11 @@ import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useTranslation } from "react-i18next";
 
 const CategoryPage = () => {
   const { slug } = useParams();
+  const { t } = useTranslation();
 
   const { data: category } = useQuery({
     queryKey: ['category', slug],
@@ -39,7 +41,7 @@ const CategoryPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-celestial-100 to-celestial-300">
       <Link to="/" className="fixed top-8 left-8">
         <Button variant="outline" className="rounded-full">
-          ← Voltar para Home
+          {t('navigation.backToHome')}
         </Button>
       </Link>
 
@@ -71,11 +73,7 @@ const CategoryPage = () => {
                 <h3 className="text-xl font-semibold mb-2 text-gray-800">{post.title}</h3>
                 <p className="text-gray-600">{post.excerpt}</p>
                 <div className="mt-4 text-sm text-gray-500">
-                  {new Date(post.created_at).toLocaleDateString('pt-BR', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
+                  {t('blog.publishedOn')} {new Date(post.created_at).toLocaleDateString()}
                 </div>
               </div>
             </Link>
@@ -85,7 +83,7 @@ const CategoryPage = () => {
 
       <footer className="bg-white/10 backdrop-blur-sm py-8 mt-20">
         <div className="max-w-screen-xl mx-auto px-8 text-center text-gray-600">
-          <p>© 2024 Blog do Futuro. Todos os direitos reservados.</p>
+          <p>© 2024 Blog do Futuro. {t('footer.allRightsReserved')}</p>
         </div>
       </footer>
     </div>

@@ -11,23 +11,23 @@ const resources = {
         nameLabel: "Como podemos te chamar?",
         namePlaceholder: "Digite seu primeiro nome"
       },
-      quiz: {
-        question: "Pergunta",
-        previous: "Anterior",
-        seeResults: "Ver Resultados",
-        of: "de"
+      navigation: {
+        home: "Início",
+        about: "Sobre",
+        backToHome: "← Voltar para Início"
       },
-      result: {
-        specialVerse: "aqui está seu versículo especial:",
-        share: "Compartilhe esta mensagem de luz e inspiração!"
+      blog: {
+        readMore: "Ler mais",
+        relatedPosts: "Posts Relacionados",
+        categories: "Categorias",
+        publishedOn: "Publicado em",
+        by: "por",
+        shareOn: "Compartilhar em",
+        nextPost: "Próximo Post",
+        previousPost: "Post Anterior"
       },
-      form: {
-        emailPlaceholder: "Seu email",
-        namePlaceholder: "Seu nome",
-        submitButton: "Descobrir meu versículo",
-        errorMessage: "Por favor, preencha todos os campos",
-        emailError: "Por favor, insira um email válido",
-        receiveVerse: "Receba seu versículo"
+      footer: {
+        allRightsReserved: "Todos os direitos reservados."
       }
     }
   },
@@ -40,23 +40,23 @@ const resources = {
         nameLabel: "What should we call you?",
         namePlaceholder: "Enter your first name"
       },
-      quiz: {
-        question: "Question",
-        previous: "Previous",
-        seeResults: "See Results",
-        of: "of"
+      navigation: {
+        home: "Home",
+        about: "About",
+        backToHome: "← Back to Home"
       },
-      result: {
-        specialVerse: "here is your special verse:",
-        share: "Share this message of light and inspiration!"
+      blog: {
+        readMore: "Read more",
+        relatedPosts: "Related Posts",
+        categories: "Categories",
+        publishedOn: "Published on",
+        by: "by",
+        shareOn: "Share on",
+        nextPost: "Next Post",
+        previousPost: "Previous Post"
       },
-      form: {
-        emailPlaceholder: "Your email",
-        namePlaceholder: "Your name",
-        submitButton: "Discover my verse",
-        errorMessage: "Please fill in all fields",
-        emailError: "Please enter a valid email",
-        receiveVerse: "Receive your verse"
+      footer: {
+        allRightsReserved: "All rights reserved."
       }
     }
   },
@@ -69,23 +69,23 @@ const resources = {
         nameLabel: "¿Cómo podemos llamarte?",
         namePlaceholder: "Ingresa tu nombre"
       },
-      quiz: {
-        question: "Pregunta",
-        previous: "Anterior",
-        seeResults: "Ver Resultados",
-        of: "de"
+      navigation: {
+        home: "Inicio",
+        about: "Sobre",
+        backToHome: "← Volver al Inicio"
       },
-      result: {
-        specialVerse: "aquí está tu versículo especial:",
-        share: "¡Comparte este mensaje de luz e inspiración!"
+      blog: {
+        readMore: "Leer más",
+        relatedPosts: "Posts Relacionados",
+        categories: "Categorías",
+        publishedOn: "Publicado el",
+        by: "por",
+        shareOn: "Compartir en",
+        nextPost: "Siguiente Post",
+        previousPost: "Post Anterior"
       },
-      form: {
-        emailPlaceholder: "Tu email",
-        namePlaceholder: "Tu nombre",
-        submitButton: "Descubrir mi versículo",
-        errorMessage: "Por favor, completa todos los campos",
-        emailError: "Por favor, ingresa un email válido",
-        receiveVerse: "Recibe tu versículo"
+      footer: {
+        allRightsReserved: "Todos los derechos reservados."
       }
     }
   },
@@ -98,23 +98,23 @@ const resources = {
         nameLabel: "Come possiamo chiamarti?",
         namePlaceholder: "Inserisci il tuo nome"
       },
-      quiz: {
-        question: "Domanda",
-        previous: "Precedente",
-        seeResults: "Vedi Risultati",
-        of: "di"
+      navigation: {
+        home: "Home",
+        about: "Chi Siamo",
+        backToHome: "← Torna alla Home"
       },
-      result: {
-        specialVerse: "ecco il tuo versetto speciale:",
-        share: "Condividi questo messaggio di luce e ispirazione!"
+      blog: {
+        readMore: "Leggi di più",
+        relatedPosts: "Post Correlati",
+        categories: "Categorie",
+        publishedOn: "Pubblicato il",
+        by: "da",
+        shareOn: "Condividi su",
+        nextPost: "Post Successivo",
+        previousPost: "Post Precedente"
       },
-      form: {
-        emailPlaceholder: "La tua email",
-        namePlaceholder: "Il tuo nome",
-        submitButton: "Scopri il mio versetto",
-        errorMessage: "Per favore, compila tutti i campi",
-        emailError: "Per favore, inserisci una email valida",
-        receiveVerse: "Ricevi il tuo versetto"
+      footer: {
+        allRightsReserved: "Tutti i diritti riservati."
       }
     }
   },
@@ -127,23 +127,23 @@ const resources = {
         nameLabel: "Comment pouvons-nous vous appeler ?",
         namePlaceholder: "Entrez votre prénom"
       },
-      quiz: {
-        question: "Question",
-        previous: "Précédent",
-        seeResults: "Voir les Résultats",
-        of: "sur"
+      navigation: {
+        home: "Accueil",
+        about: "À Propos",
+        backToHome: "← Retour à l'Accueil"
       },
-      result: {
-        specialVerse: "voici votre verset spécial :",
-        share: "Partagez ce message de lumière et d'inspiration !"
+      blog: {
+        readMore: "Lire la suite",
+        relatedPosts: "Articles Connexes",
+        categories: "Catégories",
+        publishedOn: "Publié le",
+        by: "par",
+        shareOn: "Partager sur",
+        nextPost: "Article Suivant",
+        previousPost: "Article Précédent"
       },
-      form: {
-        emailPlaceholder: "Votre email",
-        namePlaceholder: "Votre nom",
-        submitButton: "Découvrir mon verset",
-        errorMessage: "Veuillez remplir tous les champs",
-        emailError: "Veuillez entrer un email valide",
-        receiveVerse: "Recevez votre verset"
+      footer: {
+        allRightsReserved: "Tous droits réservés."
       }
     }
   }

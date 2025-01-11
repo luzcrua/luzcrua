@@ -12,7 +12,16 @@ const resources = {
       home: {
         title: "Blog do Futuro",
         description: "Explorando ideias e compartilhando conhecimento",
-        startButton: "Começar a Explorar"
+        startButton: "Começar a Explorar",
+        latestPosts: "Últimas Publicações",
+        exploreCategories: "Explore as Categorias"
+      },
+      welcome: {
+        title: "Bem-vindo ao Blog do Futuro",
+        description: "Um espaço para explorar ideias e compartilhar conhecimento",
+        nameLabel: "Seu nome",
+        namePlaceholder: "Digite seu nome",
+        startButton: "Começar"
       },
       categories: {
         technology: "Tecnologia",
@@ -20,7 +29,8 @@ const resources = {
         science: "Ciência",
         scienceDescription: "Descobertas e avanços científicos",
         culture: "Cultura",
-        cultureDescription: "Arte, música e entretenimento"
+        cultureDescription: "Arte, música e entretenimento",
+        all: "Todas as Categorias"
       },
       blog: {
         readMore: "Ler mais",
@@ -47,7 +57,16 @@ const resources = {
       home: {
         title: "Future Blog",
         description: "Exploring ideas and sharing knowledge",
-        startButton: "Start Exploring"
+        startButton: "Start Exploring",
+        latestPosts: "Latest Posts",
+        exploreCategories: "Explore Categories"
+      },
+      welcome: {
+        title: "Welcome to Future Blog",
+        description: "A space to explore ideas and share knowledge",
+        nameLabel: "Your name",
+        namePlaceholder: "Enter your name",
+        startButton: "Start"
       },
       categories: {
         technology: "Technology",
@@ -55,7 +74,8 @@ const resources = {
         science: "Science",
         scienceDescription: "Scientific discoveries and advances",
         culture: "Culture",
-        cultureDescription: "Art, music and entertainment"
+        cultureDescription: "Art, music and entertainment",
+        all: "All Categories"
       },
       blog: {
         readMore: "Read more",
@@ -82,7 +102,16 @@ const resources = {
       home: {
         title: "Blog del Futuro",
         description: "Explorando ideas y compartiendo conocimiento",
-        startButton: "Empezar a Explorar"
+        startButton: "Empezar a Explorar",
+        latestPosts: "Últimas Publicaciones",
+        exploreCategories: "Explora las Categorías"
+      },
+      welcome: {
+        title: "Bienvenido al Blog del Futuro",
+        description: "Un espacio para explorar ideas y compartir conocimiento",
+        nameLabel: "Tu nombre",
+        namePlaceholder: "Ingresa tu nombre",
+        startButton: "Comenzar"
       },
       categories: {
         technology: "Tecnología",
@@ -90,7 +119,8 @@ const resources = {
         science: "Ciencia",
         scienceDescription: "Descubrimientos y avances científicos",
         culture: "Cultura",
-        cultureDescription: "Arte, música y entretenimiento"
+        cultureDescription: "Arte, música y entretenimiento",
+        all: "Todas las Categorías"
       },
       blog: {
         readMore: "Leer más",
@@ -117,7 +147,16 @@ const resources = {
       home: {
         title: "Blog del Futuro",
         description: "Esplorando idee e condividendo conoscenza",
-        startButton: "Inizia a Esplorare"
+        startButton: "Inizia a Esplorare",
+        latestPosts: "Ultimi Post",
+        exploreCategories: "Esplora le Categorie"
+      },
+      welcome: {
+        title: "Benvenuto nel Blog del Futuro",
+        description: "Uno spazio per esplorare idee e condividere conoscenza",
+        nameLabel: "Il tuo nome",
+        namePlaceholder: "Inserisci il tuo nome",
+        startButton: "Inizia"
       },
       categories: {
         technology: "Tecnologia",
@@ -125,7 +164,8 @@ const resources = {
         science: "Scienza",
         scienceDescription: "Scoperte e progressi scientifici",
         culture: "Cultura",
-        cultureDescription: "Arte, musica e intrattenimento"
+        cultureDescription: "Arte, musica e intrattenimento",
+        all: "Tutte le Categorie"
       },
       blog: {
         readMore: "Leggi di più",
@@ -152,7 +192,16 @@ const resources = {
       home: {
         title: "Blog du Futur",
         description: "Explorer des idées et partager des connaissances",
-        startButton: "Commencer à Explorer"
+        startButton: "Commencer à Explorer",
+        latestPosts: "Derniers Articles",
+        exploreCategories: "Explorer les Catégories"
+      },
+      welcome: {
+        title: "Bienvenue sur le Blog du Futur",
+        description: "Un espace pour explorer des idées et partager des connaissances",
+        nameLabel: "Votre nom",
+        namePlaceholder: "Entrez votre nom",
+        startButton: "Commencer"
       },
       categories: {
         technology: "Technologie",
@@ -160,7 +209,8 @@ const resources = {
         science: "Science",
         scienceDescription: "Découvertes et avancées scientifiques",
         culture: "Culture",
-        cultureDescription: "Art, musique et divertissement"
+        cultureDescription: "Art, musique et divertissement",
+        all: "Toutes les Catégories"
       },
       blog: {
         readMore: "Lire la suite",

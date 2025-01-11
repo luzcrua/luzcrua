@@ -72,7 +72,7 @@ const HomePage = () => {
         </section>
 
         <section className="mb-20">
-          <h2 className="text-3xl font-bold mb-8 text-center">{t('blog.categories')}</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{t('categories.all')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {categories?.map((category) => (
               <Link
@@ -92,6 +92,7 @@ const HomePage = () => {
         </section>
 
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+          <h2 className="text-3xl font-bold mb-8 col-span-full text-center">{t('home.latestPosts')}</h2>
           {posts?.map((post) => (
             <Link
               key={post.id}
@@ -101,7 +102,7 @@ const HomePage = () => {
               <div className="aspect-video overflow-hidden">
                 <img
                   src={post.image_url || 'https://via.placeholder.com/800x400'}
-                  alt={t(`posts.${post.slug}.title`, { defaultValue: post.title })}
+                  alt={post.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
@@ -110,10 +111,10 @@ const HomePage = () => {
                   {t(`categories.${post.categories?.slug}`, { defaultValue: post.categories?.name })}
                 </div>
                 <h3 className="text-xl font-semibold mb-2 text-gray-800">
-                  {t(`posts.${post.slug}.title`, { defaultValue: post.title })}
+                  {post.title}
                 </h3>
                 <p className="text-gray-600">
-                  {t(`posts.${post.slug}.excerpt`, { defaultValue: post.excerpt })}
+                  {post.excerpt}
                 </p>
                 <Button variant="link" className="mt-4">
                   {t('blog.readMore')}

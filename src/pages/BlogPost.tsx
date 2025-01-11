@@ -3,17 +3,16 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslation } from "react-i18next";
-import { translateText } from "@/services/translation";
+import { translateObject } from "@/services/translation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const BlogPost = () => {
   const { slug } = useParams();
-  const { i18n } = useTranslation();
-  const [translatedContent, setTranslatedContent] = useState("");
-  const [translatedTitle, setTranslatedTitle] = useState("");
+  const { i18n, t } = useTranslation();
+  const [translatedPost, setTranslatedPost] = useState<any>(null);
 
-  const { data: post } = useQuery({
+  const { data: post, isLoading } = useQuery({
     queryKey: ['post', slug],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -22,7 +21,9 @@ const BlogPost = () => {
         .eq('slug', slug)
         .single();
       
-      // Inserir o novo post se ele ainda não existir
+      if (error) throw error;
+      
+      // Se não encontrou o post e o slug é específico, cria um novo
       if (!data && slug === "impacto-ia-sociedade") {
         const now = new Date().toISOString();
         const newPostId = crypto.randomUUID();
@@ -65,13 +66,12 @@ Entretanto, junto com estes avanços, surgem desafios éticos significativos. Qu
           } 
         };
       }
-
-      if (error) throw error;
+      
       return data;
     },
   });
 
-  // Nova query para buscar posts relacionados
+  // Nova query para posts relacionados
   const { data: relatedPosts = [] } = useQuery({
     queryKey: ['relatedPosts', post?.category_id],
     enabled: !!post?.category_id,
@@ -90,54 +90,56 @@ Entretanto, junto com estes avanços, surgem desafios éticos significativos. Qu
   });
 
   useEffect(() => {
-    const translatePost = async () => {
+    const translateContent = async () => {
       if (!post) return;
 
-      if (i18n.language === 'pt') {
-        setTranslatedContent(post.content);
-        setTranslatedTitle(post.title);
-        return;
-      }
-
       try {
-        const translatedTitleText = await translateText(post.title, i18n.language);
-        setTranslatedTitle(translatedTitleText);
+        const translated = await translateObject(
+          post,
+          i18n.language,
+          ['title', 'content', 'excerpt']
+        );
+        
+        if (translated.categories) {
+          translated.categories = await translateObject(
+            translated.categories,
+            i18n.language,
+            ['name', 'description']
+          );
+        }
 
-        const translatedContentText = await translateText(post.content, i18n.language);
-        setTranslatedContent(translatedContentText);
-
-        console.log('Post traduzido com sucesso para:', i18n.language);
+        setTranslatedPost(translated);
+        console.log('Content translated successfully');
       } catch (error) {
-        console.error('Erro ao traduzir o post:', error);
-        toast.error('Erro ao traduzir o conteúdo. Usando conteúdo original.');
-        setTranslatedContent(post.content);
-        setTranslatedTitle(post.title);
+        console.error('Error translating content:', error);
+        setTranslatedPost(post);
+        toast.error('Erro ao traduzir conteúdo');
       }
     };
 
-    translatePost();
+    translateContent();
   }, [post, i18n.language]);
 
-  if (!post) return null;
+  if (isLoading || !translatedPost) return null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-celestial-50 to-celestial-200">
       <Link to="/" className="fixed top-8 left-8 z-10">
         <Button variant="outline" className="rounded-full">
-          ← Voltar
+          {t('navigation.backToHome')}
         </Button>
       </Link>
 
       <article className="max-w-3xl mx-auto px-8 py-20">
         <header className="text-center mb-12">
           <div className="text-celestial-600 mb-4">
-            {post.categories?.name}
+            {translatedPost.categories?.name}
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-celestial-600 to-celestial-800">
-            {translatedTitle || post.title}
+            {translatedPost.title}
           </h1>
           <div className="text-gray-600 mb-8">
-            {new Date(post.created_at).toLocaleDateString(i18n.language, {
+            {new Date(translatedPost.created_at).toLocaleDateString(i18n.language, {
               year: 'numeric',
               month: 'long',
               day: 'numeric'
@@ -145,8 +147,8 @@ Entretanto, junto com estes avanços, surgem desafios éticos significativos. Qu
           </div>
           <div className="rounded-2xl overflow-hidden mb-12">
             <img
-              src={post.image_url}
-              alt={translatedTitle || post.title}
+              src={translatedPost.image_url}
+              alt={translatedPost.title}
               className="w-full h-[400px] object-cover"
             />
           </div>
@@ -154,13 +156,13 @@ Entretanto, junto com estes avanços, surgem desafios éticos significativos. Qu
 
         <div className="prose prose-lg max-w-none">
           <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-            {translatedContent || post.content}
+            {translatedPost.content}
           </p>
         </div>
       </article>
 
       <section className="max-w-5xl mx-auto px-8 mb-20">
-        <h2 className="text-2xl font-bold mb-8 text-center">Posts Relacionados</h2>
+        <h2 className="text-2xl font-bold mb-8 text-center">{t('blog.relatedPosts')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {relatedPosts.map((relatedPost) => (
             <Link
@@ -186,7 +188,7 @@ Entretanto, junto com estes avanços, surgem desafios éticos significativos. Qu
 
       <footer className="bg-white/10 backdrop-blur-sm py-8 mt-20">
         <div className="max-w-screen-xl mx-auto px-8 text-center text-gray-600">
-          <p>© 2024 Blog do Futuro. Todos os direitos reservados.</p>
+          <p>© 2024 Blog do Futuro. {t('footer.allRightsReserved')}</p>
         </div>
       </footer>
     </div>

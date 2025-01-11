@@ -4,9 +4,13 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import { translateArray } from "@/services/translation";
 
 const HomePage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const [translatedCategories, setTranslatedCategories] = useState<any[]>([]);
+  const [translatedPosts, setTranslatedPosts] = useState<any[]>([]);
   
   const { data: categories } = useQuery({
     queryKey: ['categories'],
@@ -29,6 +33,45 @@ const HomePage = () => {
     },
   });
 
+  useEffect(() => {
+    const translateContent = async () => {
+      if (categories) {
+        const translated = await translateArray(
+          categories,
+          i18n.language,
+          ['name', 'description']
+        );
+        setTranslatedCategories(translated);
+      }
+
+      if (posts) {
+        const translated = await translateArray(
+          posts,
+          i18n.language,
+          ['title', 'excerpt']
+        );
+        
+        // Traduz as categorias dentro dos posts
+        const translatedWithCategories = await Promise.all(
+          translated.map(async (post) => {
+            if (post.categories) {
+              post.categories = await translateObject(
+                post.categories,
+                i18n.language,
+                ['name', 'description']
+              );
+            }
+            return post;
+          })
+        );
+        
+        setTranslatedPosts(translatedWithCategories);
+      }
+    };
+
+    translateContent();
+  }, [categories, posts, i18n.language]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-celestial-100 to-celestial-300">
       <header className="py-6 px-8">
@@ -39,13 +82,13 @@ const HomePage = () => {
                 {t('navigation.home')}
               </Link>
             </NavigationMenuItem>
-            {categories?.map((category) => (
+            {translatedCategories.map((category) => (
               <NavigationMenuItem key={category.id}>
                 <Link 
                   to={`/category/${category.slug}`}
                   className="text-lg font-medium hover:text-celestial-600 transition-colors"
                 >
-                  {t(`categories.${category.slug}`, { defaultValue: category.name })}
+                  {category.name}
                 </Link>
               </NavigationMenuItem>
             ))}
@@ -74,26 +117,24 @@ const HomePage = () => {
         <section className="mb-20">
           <h2 className="text-3xl font-bold mb-8 text-center">{t('categories.all')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {categories?.map((category) => (
+            {translatedCategories.map((category) => (
               <Link
                 key={category.id}
                 to={`/category/${category.slug}`}
                 className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-1"
               >
-                <h3 className="text-xl font-semibold mb-2">
-                  {t(`categories.${category.slug}`, { defaultValue: category.name })}
-                </h3>
-                <p className="text-gray-600">
-                  {t(`categories.${category.slug}Description`, { defaultValue: category.description })}
-                </p>
+                <h3 className="text-xl font-semibold mb-2">{category.name}</h3>
+                <p className="text-gray-600">{category.description}</p>
               </Link>
             ))}
           </div>
         </section>
 
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-          <h2 className="text-3xl font-bold mb-8 col-span-full text-center">{t('home.latestPosts')}</h2>
-          {posts?.map((post) => (
+          <h2 className="text-3xl font-bold mb-8 col-span-full text-center">
+            {t('home.latestPosts')}
+          </h2>
+          {translatedPosts.map((post) => (
             <Link
               key={post.id}
               to={`/post/${post.slug}`}
@@ -108,7 +149,7 @@ const HomePage = () => {
               </div>
               <div className="p-6">
                 <div className="text-sm text-celestial-600 mb-2">
-                  {t(`categories.${post.categories?.slug}`, { defaultValue: post.categories?.name })}
+                  {post.categories?.name}
                 </div>
                 <h3 className="text-xl font-semibold mb-2 text-gray-800">
                   {post.title}

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'sonner';
 
 const LIBRE_TRANSLATE_API = 'https://libretranslate.de/translate';
 
@@ -7,19 +8,57 @@ interface TranslationResponse {
 }
 
 export const translateText = async (text: string, targetLang: string): Promise<string> => {
-  console.log('Translating text:', text, 'to language:', targetLang);
+  // Se o texto estiver vazio ou o idioma for português (padrão), retorna o texto original
+  if (!text || targetLang === 'pt') {
+    return text;
+  }
+
+  console.log('Translating text:', text.substring(0, 50) + '...', 'to language:', targetLang);
   
   try {
     const response = await axios.post(LIBRE_TRANSLATE_API, {
       q: text,
-      source: 'auto',
+      source: 'pt', // Definindo português como idioma fonte
       target: targetLang,
     });
 
-    console.log('Translation response:', response.data);
+    console.log('Translation successful');
     return response.data.translatedText;
   } catch (error) {
     console.error('Translation error:', error);
-    return text; // Retorna o texto original em caso de erro
+    toast.error('Erro na tradução, mostrando conteúdo original');
+    return text;
   }
+};
+
+// Função auxiliar para traduzir objetos complexos
+export const translateObject = async <T extends object>(
+  obj: T,
+  targetLang: string,
+  fieldsToTranslate: (keyof T)[]
+): Promise<T> => {
+  if (targetLang === 'pt') return obj;
+
+  const translatedObj = { ...obj };
+
+  for (const field of fieldsToTranslate) {
+    if (typeof obj[field] === 'string') {
+      translatedObj[field] = await translateText(obj[field] as string, targetLang);
+    }
+  }
+
+  return translatedObj;
+};
+
+// Função para traduzir arrays de objetos
+export const translateArray = async <T extends object>(
+  arr: T[],
+  targetLang: string,
+  fieldsToTranslate: (keyof T)[]
+): Promise<T[]> => {
+  if (targetLang === 'pt') return arr;
+
+  return Promise.all(
+    arr.map(item => translateObject(item, targetLang, fieldsToTranslate))
+  );
 };

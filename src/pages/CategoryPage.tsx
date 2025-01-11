@@ -3,10 +3,14 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import { translateObject, translateArray } from "@/services/translation";
 
 const CategoryPage = () => {
   const { slug } = useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const [translatedCategory, setTranslatedCategory] = useState<any>(null);
+  const [translatedPosts, setTranslatedPosts] = useState<any[]>([]);
 
   const { data: category } = useQuery({
     queryKey: ['category', slug],
@@ -35,7 +39,31 @@ const CategoryPage = () => {
     },
   });
 
-  if (!category) return null;
+  useEffect(() => {
+    const translateContent = async () => {
+      if (category) {
+        const translated = await translateObject(
+          category,
+          i18n.language,
+          ['name', 'description']
+        );
+        setTranslatedCategory(translated);
+      }
+
+      if (posts) {
+        const translated = await translateArray(
+          posts,
+          i18n.language,
+          ['title', 'excerpt']
+        );
+        setTranslatedPosts(translated);
+      }
+    };
+
+    translateContent();
+  }, [category, posts, i18n.language]);
+
+  if (!translatedCategory) return null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-celestial-100 to-celestial-300">
@@ -48,15 +76,15 @@ const CategoryPage = () => {
       <main className="max-w-screen-xl mx-auto px-8 py-20">
         <header className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-celestial-500 to-celestial-700">
-            {category.name}
+            {translatedCategory.name}
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            {category.description}
+            {translatedCategory.description}
           </p>
         </header>
 
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {posts?.map((post) => (
+          {translatedPosts.map((post) => (
             <Link
               key={post.id}
               to={`/post/${post.slug}`}
@@ -73,7 +101,11 @@ const CategoryPage = () => {
                 <h3 className="text-xl font-semibold mb-2 text-gray-800">{post.title}</h3>
                 <p className="text-gray-600">{post.excerpt}</p>
                 <div className="mt-4 text-sm text-gray-500">
-                  {t('blog.publishedOn')} {new Date(post.created_at).toLocaleDateString()}
+                  {t('blog.publishedOn')} {new Date(post.created_at).toLocaleDateString(i18n.language, {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
                 </div>
               </div>
             </Link>

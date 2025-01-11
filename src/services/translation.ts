@@ -32,7 +32,7 @@ export const translateText = async (text: string, targetLang: string): Promise<s
 };
 
 // Função auxiliar para traduzir objetos complexos
-export const translateObject = async <T extends object>(
+export const translateObject = async <T extends Record<string, any>>(
   obj: T,
   targetLang: string,
   fieldsToTranslate: (keyof T)[]
@@ -43,7 +43,8 @@ export const translateObject = async <T extends object>(
 
   for (const field of fieldsToTranslate) {
     if (typeof obj[field] === 'string') {
-      translatedObj[field] = await translateText(obj[field] as string, targetLang);
+      const translated = await translateText(obj[field] as string, targetLang);
+      translatedObj[field] = translated as T[keyof T];
     }
   }
 
@@ -51,7 +52,7 @@ export const translateObject = async <T extends object>(
 };
 
 // Função para traduzir arrays de objetos
-export const translateArray = async <T extends object>(
+export const translateArray = async <T extends Record<string, any>>(
   arr: T[],
   targetLang: string,
   fieldsToTranslate: (keyof T)[]

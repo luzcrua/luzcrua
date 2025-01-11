@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import { translateArray } from "@/services/translation";
+import { translateArray, translateObject } from "@/services/translation";
 
 const HomePage = () => {
   const { t, i18n } = useTranslation();

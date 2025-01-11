@@ -4,17 +4,23 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
   pt: {
     translation: {
-      welcome: {
-        title: "Espelho da Alma",
-        description: "Bem-vindo(a) a uma jornada de autoconhecimento e reflexão espiritual. Através de perguntas cuidadosamente selecionadas, vamos descobrir um versículo bíblico especialmente escolhido para você neste momento.",
-        startButton: "Começar Jornada",
-        nameLabel: "Como podemos te chamar?",
-        namePlaceholder: "Digite seu primeiro nome"
-      },
       navigation: {
         home: "Início",
         about: "Sobre",
         backToHome: "← Voltar para Início"
+      },
+      home: {
+        title: "Blog do Futuro",
+        description: "Explorando ideias e compartilhando conhecimento",
+        startButton: "Começar a Explorar"
+      },
+      categories: {
+        technology: "Tecnologia",
+        technologyDescription: "Novidades e análises do mundo da tecnologia",
+        science: "Ciência",
+        scienceDescription: "Descobertas e avanços científicos",
+        culture: "Cultura",
+        cultureDescription: "Arte, música e entretenimento"
       },
       blog: {
         readMore: "Ler mais",
@@ -33,17 +39,23 @@ const resources = {
   },
   en: {
     translation: {
-      welcome: {
-        title: "Soul Mirror",
-        description: "Welcome to a journey of self-knowledge and spiritual reflection. Through carefully selected questions, we will discover a biblical verse specially chosen for you at this moment.",
-        startButton: "Start Journey",
-        nameLabel: "What should we call you?",
-        namePlaceholder: "Enter your first name"
-      },
       navigation: {
         home: "Home",
         about: "About",
         backToHome: "← Back to Home"
+      },
+      home: {
+        title: "Future Blog",
+        description: "Exploring ideas and sharing knowledge",
+        startButton: "Start Exploring"
+      },
+      categories: {
+        technology: "Technology",
+        technologyDescription: "News and analysis from the tech world",
+        science: "Science",
+        scienceDescription: "Scientific discoveries and advances",
+        culture: "Culture",
+        cultureDescription: "Art, music and entertainment"
       },
       blog: {
         readMore: "Read more",
@@ -62,17 +74,23 @@ const resources = {
   },
   es: {
     translation: {
-      welcome: {
-        title: "Espejo del Alma",
-        description: "Bienvenido(a) a un viaje de autoconocimiento y reflexión espiritual. A través de preguntas cuidadosamente seleccionadas, descubriremos un versículo bíblico especialmente elegido para ti en este momento.",
-        startButton: "Comenzar Viaje",
-        nameLabel: "¿Cómo podemos llamarte?",
-        namePlaceholder: "Ingresa tu nombre"
-      },
       navigation: {
         home: "Inicio",
-        about: "Sobre",
+        about: "Acerca de",
         backToHome: "← Volver al Inicio"
+      },
+      home: {
+        title: "Blog del Futuro",
+        description: "Explorando ideas y compartiendo conocimiento",
+        startButton: "Empezar a Explorar"
+      },
+      categories: {
+        technology: "Tecnología",
+        technologyDescription: "Novedades y análisis del mundo de la tecnología",
+        science: "Ciencia",
+        scienceDescription: "Descubrimientos y avances científicos",
+        culture: "Cultura",
+        cultureDescription: "Arte, música y entretenimiento"
       },
       blog: {
         readMore: "Leer más",
@@ -91,17 +109,23 @@ const resources = {
   },
   it: {
     translation: {
-      welcome: {
-        title: "Specchio dell'Anima",
-        description: "Benvenuto/a in un viaggio di autoconoscenza e riflessione spirituale. Attraverso domande accuratamente selezionate, scopriremo un versetto biblico appositamente scelto per te in questo momento.",
-        startButton: "Inizia il Viaggio",
-        nameLabel: "Come possiamo chiamarti?",
-        namePlaceholder: "Inserisci il tuo nome"
-      },
       navigation: {
         home: "Home",
         about: "Chi Siamo",
         backToHome: "← Torna alla Home"
+      },
+      home: {
+        title: "Blog del Futuro",
+        description: "Esplorando idee e condividendo conoscenza",
+        startButton: "Inizia a Esplorare"
+      },
+      categories: {
+        technology: "Tecnologia",
+        technologyDescription: "Novità e analisi dal mondo della tecnologia",
+        science: "Scienza",
+        scienceDescription: "Scoperte e progressi scientifici",
+        culture: "Cultura",
+        cultureDescription: "Arte, musica e intrattenimento"
       },
       blog: {
         readMore: "Leggi di più",
@@ -120,17 +144,23 @@ const resources = {
   },
   fr: {
     translation: {
-      welcome: {
-        title: "Miroir de l'Âme",
-        description: "Bienvenue dans un voyage d'introspection et de réflexion spirituelle. À travers des questions soigneusement sélectionnées, nous découvrirons un verset biblique spécialement choisi pour vous en ce moment.",
-        startButton: "Commencer le Voyage",
-        nameLabel: "Comment pouvons-nous vous appeler ?",
-        namePlaceholder: "Entrez votre prénom"
-      },
       navigation: {
         home: "Accueil",
         about: "À Propos",
         backToHome: "← Retour à l'Accueil"
+      },
+      home: {
+        title: "Blog du Futur",
+        description: "Explorer des idées et partager des connaissances",
+        startButton: "Commencer à Explorer"
+      },
+      categories: {
+        technology: "Technologie",
+        technologyDescription: "Actualités et analyses du monde de la technologie",
+        science: "Science",
+        scienceDescription: "Découvertes et avancées scientifiques",
+        culture: "Culture",
+        cultureDescription: "Art, musique et divertissement"
       },
       blog: {
         readMore: "Lire la suite",

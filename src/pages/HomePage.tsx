@@ -35,24 +35,24 @@ const HomePage = () => {
         <NavigationMenu className="max-w-screen-xl mx-auto">
           <NavigationMenuList className="space-x-8">
             <NavigationMenuItem>
-              <NavigationMenuLink className="text-lg font-medium hover:text-celestial-600 transition-colors" href="/">
+              <Link to="/" className="text-lg font-medium hover:text-celestial-600 transition-colors">
                 {t('navigation.home')}
-              </NavigationMenuLink>
+              </Link>
             </NavigationMenuItem>
             {categories?.map((category) => (
               <NavigationMenuItem key={category.id}>
-                <NavigationMenuLink 
-                  className="text-lg font-medium hover:text-celestial-600 transition-colors" 
-                  href={`/category/${category.slug}`}
+                <Link 
+                  to={`/category/${category.slug}`}
+                  className="text-lg font-medium hover:text-celestial-600 transition-colors"
                 >
-                  {category.name}
-                </NavigationMenuLink>
+                  {t(`categories.${category.slug}`, { defaultValue: category.name })}
+                </Link>
               </NavigationMenuItem>
             ))}
             <NavigationMenuItem>
-              <NavigationMenuLink className="text-lg font-medium hover:text-celestial-600 transition-colors" href="/about">
+              <Link to="/about" className="text-lg font-medium hover:text-celestial-600 transition-colors">
                 {t('navigation.about')}
-              </NavigationMenuLink>
+              </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
@@ -61,13 +61,13 @@ const HomePage = () => {
       <main className="max-w-screen-xl mx-auto px-8 py-12">
         <section className="text-center mb-20">
           <h1 className="text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-celestial-500 to-celestial-700">
-            {t('welcome.title')}
+            {t('home.title')}
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            {t('welcome.description')}
+            {t('home.description')}
           </p>
           <Button className="bg-celestial-500 hover:bg-celestial-600 text-white px-8 py-6 text-lg rounded-full transition-all transform hover:scale-105">
-            {t('welcome.startButton')}
+            {t('home.startButton')}
           </Button>
         </section>
 
@@ -80,8 +80,12 @@ const HomePage = () => {
                 to={`/category/${category.slug}`}
                 className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-1"
               >
-                <h3 className="text-xl font-semibold mb-2">{category.name}</h3>
-                <p className="text-gray-600">{category.description}</p>
+                <h3 className="text-xl font-semibold mb-2">
+                  {t(`categories.${category.slug}`, { defaultValue: category.name })}
+                </h3>
+                <p className="text-gray-600">
+                  {t(`categories.${category.slug}Description`, { defaultValue: category.description })}
+                </p>
               </Link>
             ))}
           </div>
@@ -97,16 +101,20 @@ const HomePage = () => {
               <div className="aspect-video overflow-hidden">
                 <img
                   src={post.image_url || 'https://via.placeholder.com/800x400'}
-                  alt={post.title}
+                  alt={t(`posts.${post.slug}.title`, { defaultValue: post.title })}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <div className="p-6">
                 <div className="text-sm text-celestial-600 mb-2">
-                  {post.categories?.name}
+                  {t(`categories.${post.categories?.slug}`, { defaultValue: post.categories?.name })}
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-gray-800">{post.title}</h3>
-                <p className="text-gray-600">{post.excerpt}</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-800">
+                  {t(`posts.${post.slug}.title`, { defaultValue: post.title })}
+                </h3>
+                <p className="text-gray-600">
+                  {t(`posts.${post.slug}.excerpt`, { defaultValue: post.excerpt })}
+                </p>
                 <Button variant="link" className="mt-4">
                   {t('blog.readMore')}
                 </Button>

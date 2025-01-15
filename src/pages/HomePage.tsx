@@ -51,7 +51,6 @@ const HomePage = () => {
           ['title', 'excerpt']
         );
         
-        // Traduz as categorias dentro dos posts
         const translatedWithCategories = await Promise.all(
           translated.map(async (post) => {
             if (post.categories) {
@@ -72,6 +71,13 @@ const HomePage = () => {
     translateContent();
   }, [categories, posts, i18n.language]);
 
+  const mainCategories = [
+    { id: 'quiz', name: 'Quiz', slug: 'quiz' },
+    { id: 'lessons', name: 'Lições de Jesus', slug: 'licoes-de-jesus' },
+    { id: 'stories', name: 'Histórias Bíblicas', slug: 'historias-biblicas' },
+    { id: 'videos', name: 'Vídeos', slug: 'videos' }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-celestial-100 to-celestial-300">
       <header className="py-6 px-8">
@@ -79,22 +85,17 @@ const HomePage = () => {
           <NavigationMenuList className="space-x-8">
             <NavigationMenuItem>
               <Link to="/" className="text-lg font-medium hover:text-celestial-600 transition-colors">
-                {t('navigation.home')}
+                Home
               </Link>
             </NavigationMenuItem>
-            {translatedCategories.map((category) => (
-              <NavigationMenuItem key={category.id}>
-                <Link 
-                  to={`/category/${category.slug}`}
-                  className="text-lg font-medium hover:text-celestial-600 transition-colors"
-                >
-                  {category.name}
-                </Link>
-              </NavigationMenuItem>
-            ))}
             <NavigationMenuItem>
               <Link to="/about" className="text-lg font-medium hover:text-celestial-600 transition-colors">
-                {t('navigation.about')}
+                About
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link to="/contact" className="text-lg font-medium hover:text-celestial-600 transition-colors">
+                Contact
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -104,10 +105,10 @@ const HomePage = () => {
       <main className="max-w-screen-xl mx-auto px-8 py-12">
         <section className="text-center mb-20">
           <h1 className="text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-celestial-500 to-celestial-700">
-            {t('home.title')}
+            Luz Crua
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            {t('home.description')}
+            Não perca o brilho que há dentro de você
           </p>
           <Button className="bg-celestial-500 hover:bg-celestial-600 text-white px-8 py-6 text-lg rounded-full transition-all transform hover:scale-105">
             {t('home.startButton')}
@@ -115,16 +116,15 @@ const HomePage = () => {
         </section>
 
         <section className="mb-20">
-          <h2 className="text-3xl font-bold mb-8 text-center">{t('categories.all')}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {translatedCategories.map((category) => (
+          <h2 className="text-3xl font-bold mb-8 text-center">Categorias</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {mainCategories.map((category) => (
               <Link
                 key={category.id}
                 to={`/category/${category.slug}`}
                 className="group bg-white/80 backdrop-blur-sm rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-1"
               >
                 <h3 className="text-xl font-semibold mb-2">{category.name}</h3>
-                <p className="text-gray-600">{category.description}</p>
               </Link>
             ))}
           </div>
@@ -134,7 +134,7 @@ const HomePage = () => {
           <h2 className="text-3xl font-bold mb-8 col-span-full text-center">
             {t('home.latestPosts')}
           </h2>
-          {translatedPosts.map((post) => (
+          {translatedPosts?.map((post) => (
             <Link
               key={post.id}
               to={`/post/${post.slug}`}
@@ -168,7 +168,7 @@ const HomePage = () => {
 
       <footer className="bg-white/10 backdrop-blur-sm py-8">
         <div className="max-w-screen-xl mx-auto px-8 text-center text-gray-600">
-          <p>© 2024 Blog do Futuro. {t('footer.allRightsReserved')}</p>
+          <p>© 2024 Luz Crua. {t('footer.allRightsReserved')}</p>
         </div>
       </footer>
     </div>

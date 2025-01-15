@@ -3,40 +3,46 @@ export const frTranslations = {
     navigation: {
       home: "Accueil",
       about: "À Propos",
-      backToHome: "← Retour à l'Accueil"
+      backToHome: "← Retour à l'Accueil",
+      contact: "Contact"
     },
     home: {
-      title: "Blog du Futur",
-      description: "Explorer des idées et partager des connaissances",
+      title: "Lumière Brute",
+      description: "Ne perds pas la lumière qui est en toi",
       startButton: "Commencer à Explorer",
-      latestPosts: "Derniers Articles",
+      latestPosts: "Dernières Publications",
       exploreCategories: "Explorer les Catégories"
     },
-    welcome: {
-      title: "Bienvenue sur le Blog du Futur",
-      description: "Un espace pour explorer des idées et partager des connaissances",
-      nameLabel: "Votre nom",
-      namePlaceholder: "Entrez votre nom",
-      startButton: "Commencer"
-    },
     categories: {
-      technology: "Technologie",
-      technologyDescription: "Actualités et analyses du monde de la technologie",
-      science: "Science",
-      scienceDescription: "Découvertes et avancées scientifiques",
-      culture: "Culture",
-      cultureDescription: "Art, musique et divertissement",
+      quiz: "Quiz",
+      lessons: "Leçons de Jésus",
+      stories: "Histoires Bibliques",
+      videos: "Vidéos",
       all: "Toutes les Catégories"
     },
-    blog: {
-      readMore: "Lire la suite",
-      relatedPosts: "Articles Connexes",
-      categories: "Catégories",
-      publishedOn: "Publié le",
-      by: "par",
-      shareOn: "Partager sur",
-      nextPost: "Article Suivant",
-      previousPost: "Article Précédent"
+    quiz: {
+      question: "Question",
+      previous: "Précédent",
+      seeResults: "Voir les Résultats"
+    },
+    welcome: {
+      title: "Bienvenue sur Lumière Brute",
+      description: "Découvre ton verset spécial",
+      nameLabel: "Ton nom",
+      namePlaceholder: "Entre ton nom",
+      startButton: "Commencer"
+    },
+    result: {
+      specialVerse: "voici ton verset spécial",
+      share: "Partage ce message avec tes amis"
+    },
+    form: {
+      errorMessage: "Veuillez remplir tous les champs",
+      emailError: "Veuillez entrer un email valide",
+      receiveVerse: "Reçois ton verset",
+      namePlaceholder: "Ton nom",
+      emailPlaceholder: "Ton email",
+      submitButton: "Envoyer"
     },
     footer: {
       allRightsReserved: "Tous droits réservés."

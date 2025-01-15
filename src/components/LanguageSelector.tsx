@@ -25,18 +25,14 @@ export const LanguageSelector = () => {
       // Mostra um toast informando que a tradução está em andamento
       const loadingToast = toast.loading('Traduzindo conteúdo...');
       
-      // Salva o idioma escolhido no localStorage
-      localStorage.setItem('preferredLanguage', langCode);
-      
       // Muda o idioma
       await i18n.changeLanguage(langCode);
-      
-      // Força um reload da página para garantir que todo o conteúdo seja traduzido
-      window.location.reload();
       
       // Remove o toast de loading e mostra sucesso
       toast.dismiss(loadingToast);
       toast.success('Idioma alterado com sucesso!');
+      
+      console.log('Idioma alterado com sucesso para:', langCode);
     } catch (error) {
       console.error('Error changing language:', error);
       toast.error('Erro ao mudar o idioma. Tente novamente.');

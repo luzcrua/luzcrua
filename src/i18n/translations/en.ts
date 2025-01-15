@@ -3,40 +3,46 @@ export const enTranslations = {
     navigation: {
       home: "Home",
       about: "About",
-      backToHome: "← Back to Home"
+      backToHome: "← Back to Home",
+      contact: "Contact"
     },
     home: {
-      title: "Future Blog",
-      description: "Exploring ideas and sharing knowledge",
+      title: "Raw Light",
+      description: "Don't lose the light within you",
       startButton: "Start Exploring",
       latestPosts: "Latest Posts",
       exploreCategories: "Explore Categories"
     },
+    categories: {
+      quiz: "Quiz",
+      lessons: "Jesus's Lessons",
+      stories: "Biblical Stories",
+      videos: "Videos",
+      all: "All Categories"
+    },
+    quiz: {
+      question: "Question",
+      previous: "Previous",
+      seeResults: "See Results"
+    },
     welcome: {
-      title: "Welcome to Future Blog",
-      description: "A space to explore ideas and share knowledge",
+      title: "Welcome to Raw Light",
+      description: "Discover your special verse",
       nameLabel: "Your name",
       namePlaceholder: "Enter your name",
       startButton: "Start"
     },
-    categories: {
-      technology: "Technology",
-      technologyDescription: "News and analysis from the tech world",
-      science: "Science",
-      scienceDescription: "Scientific discoveries and advances",
-      culture: "Culture",
-      cultureDescription: "Art, music and entertainment",
-      all: "All Categories"
+    result: {
+      specialVerse: "here is your special verse",
+      share: "Share this message with your friends"
     },
-    blog: {
-      readMore: "Read more",
-      relatedPosts: "Related Posts",
-      categories: "Categories",
-      publishedOn: "Published on",
-      by: "by",
-      shareOn: "Share on",
-      nextPost: "Next Post",
-      previousPost: "Previous Post"
+    form: {
+      errorMessage: "Please fill in all fields",
+      emailError: "Please enter a valid email",
+      receiveVerse: "Receive your verse",
+      namePlaceholder: "Your name",
+      emailPlaceholder: "Your email",
+      submitButton: "Submit"
     },
     footer: {
       allRightsReserved: "All rights reserved."

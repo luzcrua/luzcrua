@@ -3,40 +3,46 @@ export const esTranslations = {
     navigation: {
       home: "Inicio",
       about: "Acerca de",
-      backToHome: "← Volver al Inicio"
+      backToHome: "← Volver al Inicio",
+      contact: "Contacto"
     },
     home: {
-      title: "Blog del Futuro",
-      description: "Explorando ideas y compartiendo conocimiento",
+      title: "Luz Cruda",
+      description: "No pierdas la luz que hay dentro de ti",
       startButton: "Empezar a Explorar",
       latestPosts: "Últimas Publicaciones",
       exploreCategories: "Explora las Categorías"
     },
+    categories: {
+      quiz: "Cuestionario",
+      lessons: "Lecciones de Jesús",
+      stories: "Historias Bíblicas",
+      videos: "Videos",
+      all: "Todas las Categorías"
+    },
+    quiz: {
+      question: "Pregunta",
+      previous: "Anterior",
+      seeResults: "Ver Resultados"
+    },
     welcome: {
-      title: "Bienvenido al Blog del Futuro",
-      description: "Un espacio para explorar ideas y compartir conocimiento",
+      title: "Bienvenido a Luz Cruda",
+      description: "Descubre tu versículo especial",
       nameLabel: "Tu nombre",
       namePlaceholder: "Ingresa tu nombre",
       startButton: "Comenzar"
     },
-    categories: {
-      technology: "Tecnología",
-      technologyDescription: "Novedades y análisis del mundo de la tecnología",
-      science: "Ciencia",
-      scienceDescription: "Descubrimientos y avances científicos",
-      culture: "Cultura",
-      cultureDescription: "Arte, música y entretenimiento",
-      all: "Todas las Categorías"
+    result: {
+      specialVerse: "aquí está tu versículo especial",
+      share: "Comparte este mensaje con tus amigos"
     },
-    blog: {
-      readMore: "Leer más",
-      relatedPosts: "Posts Relacionados",
-      categories: "Categorías",
-      publishedOn: "Publicado el",
-      by: "por",
-      shareOn: "Compartir en",
-      nextPost: "Siguiente Post",
-      previousPost: "Post Anterior"
+    form: {
+      errorMessage: "Por favor, completa todos los campos",
+      emailError: "Por favor, ingresa un email válido",
+      receiveVerse: "Recibe tu versículo",
+      namePlaceholder: "Tu nombre",
+      emailPlaceholder: "Tu email",
+      submitButton: "Enviar"
     },
     footer: {
       allRightsReserved: "Todos los derechos reservados."

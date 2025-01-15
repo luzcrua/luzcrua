@@ -10,9 +10,19 @@ i18n
   .init({
     resources,
     lng: savedLanguage,
+    fallbackLng: 'pt',
     interpolation: {
       escapeValue: false
+    },
+    react: {
+      useSuspense: false
     }
   });
+
+// Adiciona um listener para mudanças de idioma
+i18n.on('languageChanged', (lng) => {
+  localStorage.setItem('preferredLanguage', lng);
+  console.log('Idioma alterado para:', lng);
+});
 
 export default i18n;

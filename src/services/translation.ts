@@ -3,18 +3,26 @@ import { toast } from 'sonner';
 
 const LIBRE_TRANSLATE_API = 'https://libretranslate.de/translate';
 
-interface TranslationResponse {
-  translatedText: string;
-}
+// Cache para armazenar traduções já realizadas
+const translationCache: Record<string, Record<string, string>> = {};
+
+const getCacheKey = (text: string, targetLang: string) => `${text}_${targetLang}`;
 
 export const translateText = async (text: string, targetLang: string): Promise<string> => {
-  // Se o texto estiver vazio ou o idioma for português (padrão), retorna o texto original
   if (!text || targetLang === 'pt') {
     return text;
   }
 
+  const cacheKey = getCacheKey(text, targetLang);
+  
+  // Verifica se já existe no cache
+  if (translationCache[cacheKey]) {
+    console.log('Usando tradução em cache para:', text.substring(0, 50));
+    return translationCache[cacheKey][targetLang];
+  }
+
   try {
-    console.log('Iniciando tradução:', { text: text.substring(0, 50) + '...', targetLang });
+    console.log('Traduzindo:', text.substring(0, 50));
     
     const response = await axios.post(LIBRE_TRANSLATE_API, {
       q: text,
@@ -22,20 +30,23 @@ export const translateText = async (text: string, targetLang: string): Promise<s
       target: targetLang,
     });
 
-    console.log('Tradução bem-sucedida');
-    return response.data.translatedText;
+    const translatedText = response.data.translatedText;
+    
+    // Armazena no cache
+    if (!translationCache[cacheKey]) {
+      translationCache[cacheKey] = {};
+    }
+    translationCache[cacheKey][targetLang] = translatedText;
+
+    console.log('Tradução concluída com sucesso');
+    return translatedText;
   } catch (error) {
     console.error('Erro na tradução:', error);
-    
-    // Mostra uma mensagem mais amigável para o usuário
-    toast.error('Serviço de tradução temporariamente indisponível. Mostrando conteúdo original.');
-    
-    // Retorna o texto original em caso de erro
+    toast.error('Erro ao traduzir conteúdo. Mostrando texto original.');
     return text;
   }
 };
 
-// Função auxiliar para traduzir objetos complexos
 export const translateObject = async <T extends Record<string, any>>(
   obj: T,
   targetLang: string,
@@ -46,21 +57,22 @@ export const translateObject = async <T extends Record<string, any>>(
   const translatedObj = { ...obj };
 
   try {
-    for (const field of fieldsToTranslate) {
-      if (typeof obj[field] === 'string') {
-        const translated = await translateText(obj[field] as string, targetLang);
-        translatedObj[field] = translated as T[keyof T];
-      }
-    }
+    await Promise.all(
+      fieldsToTranslate.map(async (field) => {
+        if (typeof obj[field] === 'string') {
+          translatedObj[field] = await translateText(obj[field] as string, targetLang) as T[keyof T];
+        }
+      })
+    );
+    
+    return translatedObj;
   } catch (error) {
     console.error('Erro ao traduzir objeto:', error);
     toast.error('Erro ao traduzir conteúdo. Algumas partes podem estar no idioma original.');
+    return obj;
   }
-
-  return translatedObj;
 };
 
-// Função para traduzir arrays de objetos
 export const translateArray = async <T extends Record<string, any>>(
   arr: T[],
   targetLang: string,
@@ -69,9 +81,10 @@ export const translateArray = async <T extends Record<string, any>>(
   if (targetLang === 'pt') return arr;
 
   try {
-    return await Promise.all(
+    const translatedArray = await Promise.all(
       arr.map(item => translateObject(item, targetLang, fieldsToTranslate))
     );
+    return translatedArray;
   } catch (error) {
     console.error('Erro ao traduzir array:', error);
     toast.error('Erro ao traduzir lista de conteúdo. Alguns itens podem estar no idioma original.');

@@ -7,7 +7,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { translateText } from '@/services/translation';
 import { toast } from 'sonner';
 
 const languages = [
@@ -23,15 +22,17 @@ export const LanguageSelector = () => {
 
   const handleLanguageChange = async (langCode: string) => {
     try {
-      // Muda o idioma imediatamente para melhor UX
+      // Mostra um toast informando que a tradução está em andamento
+      const loadingToast = toast.loading('Traduzindo conteúdo...');
+      
+      // Muda o idioma
       await i18n.changeLanguage(langCode);
       
-      // Mostra um toast informando que a tradução está em andamento
-      toast.info('Traduzindo conteúdo...');
-
-      // Aqui você pode adicionar lógica para traduzir dinamicamente
-      // o conteúdo que não está no i18n, se necessário
+      // Força um reload da página para garantir que todo o conteúdo seja traduzido
+      window.location.reload();
       
+      // Remove o toast de loading e mostra sucesso
+      toast.dismiss(loadingToast);
       toast.success('Idioma alterado com sucesso!');
     } catch (error) {
       console.error('Error changing language:', error);

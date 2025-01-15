@@ -229,11 +229,14 @@ const resources = {
   }
 };
 
+// Recupera o idioma preferido do localStorage ou usa 'pt' como padrão
+const savedLanguage = localStorage.getItem('preferredLanguage') || 'pt';
+
 i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: "pt",
+    lng: savedLanguage,
     interpolation: {
       escapeValue: false
     }

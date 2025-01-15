@@ -25,6 +25,9 @@ export const LanguageSelector = () => {
       // Mostra um toast informando que a tradução está em andamento
       const loadingToast = toast.loading('Traduzindo conteúdo...');
       
+      // Salva o idioma escolhido no localStorage
+      localStorage.setItem('preferredLanguage', langCode);
+      
       // Muda o idioma
       await i18n.changeLanguage(langCode);
       
